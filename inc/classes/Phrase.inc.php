@@ -1,4 +1,5 @@
-<?php class Phrase
+<?php
+class Phrase
 {
 	private $currentPhrase;
 	private $selected = array();
@@ -16,11 +17,16 @@
 		foreach (str_split($this->currentPhrase) as $letter)
 
 			if (trim($letter)) {
-				// letter
-				if ($this->checkLetter($letter))
-					$html .= "<li class='letter $letter'>$letter</li>";
-				else
-					$html .= "<li class='hide letter $letter'>$letter</li>";
+				// letter and punctuation
+				if (ctype_punct($letter)) {
+					// punctuation
+					$html .= "<li class='punt $letter'>$letter</li>";
+				} else {
+					if ($this->checkLetter($letter))
+						$html .= "<li class='letter $letter'>$letter</li>";
+					else
+						$html .= "<li class='hide letter $letter'>$letter</li>";
+				}
 			} else
 				// space
 				$html .= '<li class="hide space"> </li>';
