@@ -18,10 +18,13 @@
 		if (isset($this->name))
 			$this->$name = $value;
 	}
+
+
 	public function checkForWin()
 	{
 		$result = $this->phrase->checkLetters();
-		if (count($result['correct']) == $result['total'])
+		$total = count($this->phrase->getFilterPhrase());
+		if (count($result['correct']) == $total)
 			return true;
 	}
 	public function checkForLose()
@@ -31,6 +34,7 @@
 		if ($this->lives == 0)
 			return true;
 	}
+
 	public function gameOver()
 	{
 		if ($this->checkForLose())

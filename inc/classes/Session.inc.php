@@ -1,8 +1,6 @@
 <?php
 class Session
 {
-    private $sessionsPartition = array('quote', 'selected', 'lives');
-
     public function __construct()
     {
         if (!isset($_SESSION['quote']))
@@ -36,6 +34,9 @@ class Session
         return $_SESSION['selected'];
     }
 
+    /**
+     * unset everthing $_SESSION has
+     */
     public static function unsetAll()
     {
         if (count($_SESSION))

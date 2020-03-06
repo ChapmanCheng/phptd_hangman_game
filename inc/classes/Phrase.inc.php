@@ -19,6 +19,11 @@ class Phrase
 		if (isset($this->name))
 			$this->$name = $value;
 	}
+
+	/**
+	 * Append html code of phrase 
+	 * @return {string} of html code block
+	 */
 	public function addPhraseToDisplay()
 	{
 		$html =  '';
@@ -52,8 +57,7 @@ class Phrase
 	{
 		$result = array(
 			'correct' => array(),
-			'wrong' => array(),
-			'total' => 0
+			'wrong' => array()
 		);
 
 		foreach ($this->selected as $userLetter)
@@ -62,34 +66,9 @@ class Phrase
 			else
 				$result['wrong'][] = $userLetter;
 
-		$result['total'] = count($this->getFilterPhrase());
-
 		return $result;
 	}
-	// public function calcResult()
-	// {
 
-	// 	$totalScore = count($this->getFilterPhrase());
-
-	// 	foreach ($this->getFilterPhrase() as $letter)
-	// 		if ($this->checkLetter($letter))
-	// 			$result['correct']++;
-	// 		else
-	// 			$result['wrong']++;
-
-	// 	// }
-	// 	// }
-	// 	// foreach ($this->selected as $letter) {
-	// 	// 	# code...
-	// 	// }
-	// 	// foreach (str_split($this->currentPhrase) as $letter) 
-	// 	// 	if ($this->checkLetter($letter))
-	// 	// 		$result['correct']++;
-	// 	// 	else
-	// 	// 		$result['wrong']++;
-
-	// 	print_r($result);
-	// }
 
 	/**
 	 * filter $currentPhrase from punctuations, empty spaces, and duplicates
