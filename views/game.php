@@ -5,3 +5,6 @@
     <?php include 'views/keyboard.php'; ?>
 </div>
 <?php include 'views/scoreboard.php'; ?>
+<script>
+    window.addEventListener('keyup', (e) => document.querySelector(`.key[value=${e.key}]`).click())
+</script>
