@@ -3,9 +3,9 @@
 	private $phrase;
 	private $lives;
 
-	public function __construct(Phrase $phrase)
+	public function __construct(string $phrase)
 	{
-		$this->phrase = $phrase;
+		$this->phrase = new Phrase($phrase);
 	}
 	public function __get($name)
 	{
@@ -33,11 +33,10 @@
 		foreach ($keyboardRows as $row) {
 			$html .= '<div class="keyrow">';
 			foreach (str_split($row) as $key) {
-				// TODO
-				// if (in_array($key, $_SESSION['selected']))
-				// 	$html .= '<input class="key selected" type="submit" name="key" value="' . $key . '" disabled>';
-				// else
-				$html .= '<input class="key" type="submit" name="key" value="' . $key . '">';
+				if ($this->phrase->checkLetter($key))
+					$html .= '<input class="key selected" type="submit" name="key" value="' . $key . '" disabled>';
+				else
+					$html .= '<input class="key" type="submit" name="key" value="' . $key . '">';
 			}
 			$html .= '</div>';
 		}
@@ -45,5 +44,8 @@
 	}
 	public function displayScore()
 	{
+		$html = '';
+
+		$html .= ' <li class="tries"><img src="images/loseHeart.png" height="35px" widght="30px"></li>';
 	}
 }

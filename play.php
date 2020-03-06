@@ -6,21 +6,14 @@ require 'inc/autoloader.php';
 echo '$_POST contains' .  '<br/>';
 print_r($_POST);
 echo '<br/><br/>';
-unset($_SESSION['selected']);
+// Session::unsetAll();
 
 
-if ($_POST) {
-    $key = filter_input(INPUT_POST, 'key', FILTER_SANITIZE_STRING);
-    if (!in_array($key, $_SESSION['selected'])) {
-        $_SESSION['selected'][] = $key;
-        sort($_SESSION['selected'], SORT_STRING);
-    }
-}
+$session = new Session();
 
-// echo in_array('h', $_SESSION['selected']) ? 'foo' : 'bar';
-$game = new Game(new Phrase("Hello World"));
+$game = new Game($session->getQuote());
 
-empty('');
+$game->phrase->checkLetters();
 ?>
 
 

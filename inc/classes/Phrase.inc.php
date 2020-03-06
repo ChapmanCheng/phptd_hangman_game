@@ -7,36 +7,52 @@ class Phrase
 	public function __construct($phrase)
 	{
 		$this->currentPhrase = $phrase;
-		if (isset($_SESSION['selected']))
-			$this->selected = $_SESSION['selected'];
+		$this->selected = $_SESSION['selected'];
 	}
 
 	public function addPhraseToDisplay()
 	{
 		$html =  '';
 		foreach (str_split($this->currentPhrase) as $letter)
-
+			// $letter = H, e, l, l, o, , W, o, r, l, d
 			if (trim($letter)) {
 				// letter and punctuation
-				if (ctype_punct($letter)) {
-					// punctuation
-					$html .= "<li class='punt $letter'>$letter</li>";
-				} else {
-					if ($this->checkLetter($letter))
-						$html .= "<li class='letter $letter'>$letter</li>";
-					else
-						$html .= "<li class='hide letter $letter'>$letter</li>";
-				}
+				$className = array($letter);
+				$className[] = $this->checkLetter($letter) ? "" : 'hide';
+				$className[] = ctype_punct($letter) ? 'punt' : 'letter';
+				$className = implode(' ', $className);
+
+				$html .= "<li class='$className'>$letter</li>";
 			} else
 				// space
 				$html .= '<li class="hide space"> </li>';
 
-
 		return $html;
 	}
 
-	private function checkLetter($letter)
+	/**
+	 * check if $letter is selected by user already
+	 * @param {string} a single English letter
+	 * @return boolean
+	 */
+	public function checkLetter(string $letter)
 	{
-		return in_array(strtolower($letter), $this->selected);
+		$letter = strtolower($letter);
+		return in_array($letter, $this->selected);
+	}
+
+	public function checkLetters()
+	{
+		$result = array('correct' => 0, 'wrong' => 0);
+		foreach ($this->selected as $letter) {
+			# code...
+		}
+		// foreach (str_split($this->currentPhrase) as $letter) 
+		// 	if ($this->checkLetter($letter))
+		// 		$result['correct']++;
+		// 	else
+		// 		$result['wrong']++;
+
+		// print_r($result);
 	}
 }
