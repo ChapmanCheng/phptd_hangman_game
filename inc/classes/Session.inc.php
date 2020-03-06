@@ -4,6 +4,8 @@ class Session
     public function __construct()
     {
         if (!isset($_SESSION['quote'])) {
+            // credits: lukePeavey
+            // source: https://github.com/lukePeavey/quotable#get-random-quote
             $data = file_get_contents('https://api.quotable.io/random?maxLength=25');
             $data = json_decode($data);
             $_SESSION['quote'] = $data->content;
