@@ -1,5 +1,13 @@
+<?php
+require 'inc/autoloader.php';
+
+$game = new Game()
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Phrase Hunter</title>
@@ -10,11 +18,12 @@
 </head>
 
 <body>
-<div class="main-container">
-    <div id="banner" class="section">
-        <h2 class="header">Phrase Hunter</h2>
+    <div class="main-container">
+        <div id="banner" class="section">
+            <h2 class="header">Phrase Hunter</h2>
+        </div>
     </div>
-</div>
 
 </body>
+
 </html>
