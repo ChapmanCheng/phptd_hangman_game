@@ -5,7 +5,8 @@
 
 	public function __construct(string $phrase)
 	{
-		$this->phrase = new Phrase($phrase);
+		$this->phrase = new Phrase($phrase, $_SESSION['selected']);
+		$this->lives = 5;
 	}
 	public function __get($name)
 	{
@@ -19,12 +20,24 @@
 	}
 	public function checkForWin()
 	{
+		$result = $this->phrase->checkLetters();
+		if (count($result['correct']) == $result['total'])
+			return true;
 	}
 	public function checkForLose()
 	{
+		$result = $this->phrase->checkLetters();
+		$this->lives = $this->lives - count($result['wrong']);
+		if ($this->lives == 0)
+			return true;
 	}
 	public function gameOver()
 	{
+		if ($this->checkForLose())
+			return 'The phrase was: "' . $this->phrase->currentPhrase . '". Better luck next time!';
+		if ($this->checkForWin())
+			return 'Congratulations on guessing: "' . $this->phrase->currentPhrase . '"';
+		return false;
 	}
 	public function displayKeyboard()
 	{
@@ -33,8 +46,8 @@
 		foreach ($keyboardRows as $row) {
 			$html .= '<div class="keyrow">';
 			foreach (str_split($row) as $key) {
-				if ($this->phrase->checkLetter($key))
-					$html .= '<input class="key selected" type="submit" name="key" value="' . $key . '" disabled>';
+				if (in_array($key, $this->phrase->selected))
+					$html .= '<input class="key" style="background-color:red;" type="submit" name="key" value="' . $key . '" disabled>';
 				else
 					$html .= '<input class="key" type="submit" name="key" value="' . $key . '">';
 			}
@@ -45,7 +58,10 @@
 	public function displayScore()
 	{
 		$html = '';
-
-		$html .= ' <li class="tries"><img src="images/loseHeart.png" height="35px" widght="30px"></li>';
+		for ($i = 0; $i < 5; $i++) {
+			$imgName = $i < $this->lives ? 'liveHeart' : 'lostHeart';
+			$html .= ' <li class="tries"><img src="images/' . $imgName . '.png" height="35px" widght="30px"></li>';
+		}
+		return $html;
 	}
 }

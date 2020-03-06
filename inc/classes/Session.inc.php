@@ -23,7 +23,7 @@ class Session
         }
 
         // ! DEBUG
-        print_r($_SESSION);
+        // print_r($_SESSION);
     }
 
     public function getQuote()

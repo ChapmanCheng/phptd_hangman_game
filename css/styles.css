@@ -215,10 +215,6 @@ input[type="submit"].correct {
   CUSTOM
  ================= */
 
-.selected {
-    background-color: red;
-}
-
 .punt {
     font-size: var(--font-size-medium);
     height: 65px;

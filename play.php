@@ -13,31 +13,14 @@ $session = new Session();
 
 $game = new Game($session->getQuote());
 
-$game->phrase->checkLetters();
-?>
+include_once 'inc/header.inc.php';
 
+if ($msg = $game->gameOver()) {
+    // go to game over screen    
+    include_once 'views/game_over.php';
+    null;
+} else
+    // play game as usual
+    include_once 'views/game.php';
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>Phrase Hunter</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/styles.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-</head>
-
-<body>
-    <div class="main-container">
-        <div id="banner" class="section">
-            <h2 class="header">Phrase Hunter</h2>
-            <?php include 'views/phrase.php'; ?>
-            <?php include 'views/keyboard.php'; ?>
-        </div>
-    </div>
-
-</body>
-
-</html>
+include_once 'inc/footer.inc.php';
