@@ -60,11 +60,11 @@ class Phrase
 			'wrong' => array()
 		);
 
-		foreach ($this->selected as $userLetter)
-			if ($this->checkLetter($userLetter))
-				$result['correct'][] = $userLetter;
+		foreach ($this->selected as $letter)
+			if ($this->checkLetter($letter))
+				$result['correct'][] = $letter;
 			else
-				$result['wrong'][] = $userLetter;
+				$result['wrong'][] = $letter;
 
 		return $result;
 	}
