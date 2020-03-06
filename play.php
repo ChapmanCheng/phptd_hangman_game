@@ -1,9 +1,10 @@
 <?php
 session_start();
 require 'inc/autoloader.php';
+// Session::unsetAll();
 
 $session = new Session();
-$game = new Game($session->getQuote());
+$game = new Game($session->quote);
 
 include_once 'inc/header.inc.php';
 

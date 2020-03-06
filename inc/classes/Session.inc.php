@@ -3,8 +3,12 @@ class Session
 {
     public function __construct()
     {
-        if (!isset($_SESSION['quote']))
-            $_SESSION['quote'] = 'Hello World.';
+        if (!isset($_SESSION['quote'])) {
+            $data = file_get_contents('https://api.quotable.io/random?maxLength=25');
+            $data = json_decode($data);
+            $_SESSION['quote'] = $data->content;
+            $_SESSION['author'] = $data->author;
+        }
 
         if (!isset($_SESSION['selected']))
             $_SESSION['selected'] = array();
@@ -23,6 +27,11 @@ class Session
         // ! DEBUG
         // print_r($_SESSION);
     }
+    public function __get($name)
+    {
+        if (isset($_SESSION[$name]))
+            return $_SESSION[$name];
+    }
 
     public function getQuote()
     {
@@ -32,6 +41,11 @@ class Session
     public function getSelected()
     {
         return $_SESSION['selected'];
+    }
+
+    public function getAuthor()
+    {
+        return $_SESSION['author'];
     }
 
     /**
