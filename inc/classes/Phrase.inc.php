@@ -4,7 +4,7 @@ class Phrase
 	private $currentPhrase;
 	private $selected = array();
 
-	public function __construct($phrase, $selected)
+	public function __construct(string $phrase, array $selected)
 	{
 		$this->currentPhrase = $phrase;
 		$this->selected = $selected;
@@ -53,12 +53,15 @@ class Phrase
 	{
 		return stripos($this->currentPhrase, $letter) !== false ?  1 : 0;
 	}
-	public function checkLetters()
+	public function getResults()
 	{
 		$result = array(
 			'correct' => array(),
 			'wrong' => array()
 		);
+
+		if (count($this->selected) == 0)
+			return $result;
 
 		foreach ($this->selected as $letter)
 			if ($this->checkLetter($letter))

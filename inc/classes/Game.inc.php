@@ -3,9 +3,9 @@
 	private $phrase;
 	private $lives;
 
-	public function __construct(string $phrase)
+	public function __construct(Phrase $phrase)
 	{
-		$this->phrase = new Phrase($phrase, $_SESSION['selected']);
+		$this->phrase = $phrase;
 		$this->lives = 5;
 	}
 	public function __get($name)
@@ -22,14 +22,14 @@
 
 	public function checkForWin()
 	{
-		$result = $this->phrase->checkLetters();
+		$result = $this->phrase->getResults();
 		$total = count($this->phrase->getFilterPhrase());
 		if (count($result['correct']) == $total)
 			return true;
 	}
 	public function checkForLose()
 	{
-		$result = $this->phrase->checkLetters();
+		$result = $this->phrase->getResults();
 		$this->lives = $this->lives - count($result['wrong']);
 		if ($this->lives == 0)
 			return true;

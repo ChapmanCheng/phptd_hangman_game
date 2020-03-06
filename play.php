@@ -3,8 +3,9 @@ session_start();
 require 'inc/autoloader.php';
 // Session::unsetAll();
 
+// var_dump($_SESSION);
 $session = new Session();
-$game = new Game($session->quote);
+$game = new Game(new Phrase($session->quote, $_SESSION['selected']));
 
 include_once 'inc/header.inc.php';
 
