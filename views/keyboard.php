@@ -1,5 +1,39 @@
 <div id="qwerty" class="section">
-    <div class="keyrow">
+    <form action="play.php" method="post">
+        <div class="keyrow">
+            <input class="key" type="submit" value="q" name="key">
+            <input class="key" type="submit" value="w" name="key">
+            <input class="key" type="submit" value="e" name="key">
+            <input class="key" type="submit" value="r" name="key">
+            <input class="key" type="submit" value="t" name="key">
+            <input class="key" type="submit" value="y" name="key">
+            <input class="key" type="submit" value="u" name="key">
+            <input class="key" type="submit" value="i" name="key">
+            <input class="key" type="submit" value="o" name="key">
+            <input class="key" type="submit" value="p" name="key">
+        </div>
+        <div class="keyrow">
+            <input type="submit" value="a" class="key" name="key">
+            <input type="submit" value="s" class="key" name="key">
+            <input type="submit" value="d" class="key" name="key">
+            <input type="submit" value="f" class="key" name="key">
+            <input type="submit" value="g" class="key" name="key">
+            <input type="submit" value="h" class="key" name="key">
+            <input type="submit" value="j" class="key" name="key">
+            <input type="submit" value="k" class="key" name="key">
+            <input type="submit" value="l" class="key" name="key">
+        </div>
+        <div class="keyrow">
+            <input type="submit" value="z" class="key" name="key">
+            <input type="submit" value="x" class="key" name="key">
+            <input type="submit" value="c" class="key" name="key">
+            <input type="submit" value="v" class="key" name="key">
+            <input type="submit" value="b" class="key" name="key">
+            <input type="submit" value="n" class="key" name="key">
+            <input type="submit" value="m" class="key" name="key">
+        </div>
+    </form>
+    <!-- <div class="keyrow">
         <button class="key">q</button>
         <button class="key">w</button>
         <button class="key">e</button>
@@ -32,5 +66,5 @@
         <button class="key">b</button>
         <button class="key">n</button>
         <button class="key">m</button>
-    </div>
+    </div> -->
 </div>
