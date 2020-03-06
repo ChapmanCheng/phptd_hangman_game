@@ -4,24 +4,23 @@ class Phrase
 	private $currentPhrase;
 	private $selected = array();
 
-	public function __construct($phrase = null, $selected = null)
+	public function __construct(string $phrase = null, array $selected = array())
 	{
 		$this->currentPhrase = $phrase;
 		$this->selected = $selected;
 
 		if (!$phrase) {
 			$this->currentPhrase  = $this->fetchRandomQuote();
-			$this->selected = array();
 		}
 	}
 
-	public function __get($name)
+	public function __get(string $name)
 	{
 		if (isset($this->$name))
 			return $this->$name;
 	}
 
-	public function __set($name, $value)
+	public function __set(string $name, $value)
 	{
 		if (isset($this->name))
 			$this->$name = $value;
@@ -33,6 +32,7 @@ class Phrase
 	 */
 	public function addPhraseToDisplay()
 	{
+
 		$html =  '';
 		foreach (str_split($this->currentPhrase) as $letter)
 			// $letter = H, e, l, l, o, , W, o, r, l, d
@@ -56,7 +56,7 @@ class Phrase
 	 * @param {string} a single English letter
 	 * @return boolean
 	 */
-	public function checkLetter()
+	public function checkLetter($letter)
 	{
 		$letter = filter_input(INPUT_POST, 'key', FILTER_SANITIZE_STRING);
 		if (!in_array($letter, $this->selected)) {

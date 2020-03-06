@@ -10,8 +10,9 @@
 	}
 	public function __destruct()
 	{
-		$_SESSION['phrase'] = $this->phrase->currentPhrase;
-		$_SESSION['selected'] = $this->phrase->selected;
+		// !Deprecate need to store info somewhere else
+		// $_SESSION['phrase'] = $this->phrase->currentPhrase;
+		// $_SESSION['selected'] = $this->phrase->selected;
 	}
 	public function __get($name)
 	{
@@ -27,17 +28,17 @@
 
 	public function checkForWin()
 	{
-		$result = $this->phrase->checkLetters();
-		$total = count($this->phrase->getFilterPhrase());
-		if (count($result['correct']) == $total)
-			return true;
+		// $result = $this->phrase->checkLetters();
+		// $total = count($this->phrase->getFilterPhrase());
+		// if (count($result['correct']) == $total)
+		// 	return true;
 	}
 	public function checkForLose()
 	{
-		$result = $this->phrase->checkLetters();
-		$this->lives = $this->lives - count($result['wrong']);
-		if ($this->lives == 0)
-			return true;
+		// $result = $this->phrase->checkLetters();
+		// $this->lives = $this->lives - count($result['wrong']);
+		// if ($this->lives == 0)
+		// 	return true;
 	}
 
 	public function gameOver()
