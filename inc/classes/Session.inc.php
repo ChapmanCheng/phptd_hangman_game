@@ -3,20 +3,11 @@ class Session
 {
     public function __construct()
     {
-        if (!isset($_SESSION['quote'])) {
-            // credits: lukePeavey
-            // source: https://github.com/lukePeavey/quotable#get-random-quote
-            $data = file_get_contents('https://api.quotable.io/random?maxLength=25');
-            $data = json_decode($data);
-            $_SESSION['quote'] = $data->content;
-            $_SESSION['author'] = $data->author;
-        }
+        if (!isset($_SESSION['phrase']))
+            $_SESSION['phrase'] = '';
 
         if (!isset($_SESSION['selected']))
             $_SESSION['selected'] = array();
-
-        if (!isset($_SESSION['lives']))
-            $_SESSION['lives'] = 5;
 
         if ($_POST) {
             $key = filter_input(INPUT_POST, 'key', FILTER_SANITIZE_STRING);
@@ -35,9 +26,15 @@ class Session
             return $_SESSION[$name];
     }
 
-    public function getQuote()
+    public function __set($name, $value)
     {
-        return $_SESSION['quote'];
+        if (isset($_SESSION[$name]))
+            $_SESSION[$name] = $value;
+    }
+
+    public function getPhrase()
+    {
+        return $_SESSION['phrase'];
     }
 
     public function getSelected()

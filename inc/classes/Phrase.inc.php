@@ -4,16 +4,23 @@ class Phrase
 	private $currentPhrase;
 	private $selected = array();
 
-	public function __construct($phrase, $selected)
+	public function __construct($phrase = null, $selected = null)
 	{
 		$this->currentPhrase = $phrase;
 		$this->selected = $selected;
+
+		if (!$phrase) {
+			$this->currentPhrase  = $this->fetchRandomQuote();
+			$this->selected = array();
+		}
 	}
+
 	public function __get($name)
 	{
 		if (isset($this->$name))
 			return $this->$name;
 	}
+
 	public function __set($name, $value)
 	{
 		if (isset($this->name))
@@ -49,8 +56,13 @@ class Phrase
 	 * @param {string} a single English letter
 	 * @return boolean
 	 */
-	public function checkLetter(string $letter)
+	public function checkLetter()
 	{
+		$letter = filter_input(INPUT_POST, 'key', FILTER_SANITIZE_STRING);
+		if (!in_array($letter, $this->selected)) {
+			$this->selected[] = $letter;
+			sort($this->selected, SORT_STRING);
+		}
 		return stripos($this->currentPhrase, $letter) !== false ?  1 : 0;
 	}
 	public function checkLetters()
@@ -89,5 +101,14 @@ class Phrase
 				return $val;
 		});
 		return $arr;
+	}
+
+	private function fetchRandomQuote()
+	{
+		// credits: lukePeavey
+		// source: https://github.com/lukePeavey/quotable#get-random-quote
+		$data = file_get_contents('https://api.quotable.io/random?maxLength=25');
+		$data = json_decode($data);
+		return $data->content;
 	}
 }

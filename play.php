@@ -1,10 +1,20 @@
 <?php
 session_start();
-require 'inc/autoloader.php';
+require 'inc/autoloader.inc.php';
 // Session::unsetAll();
 
-$session = new Session();
-$game = new Game($session->quote);
+if (!$_SESSION) {
+    $_SESSION['phrase'] = '';
+    $_SESSION['selected'] = array();
+}
+
+var_dump($_SESSION);
+
+echo 'dumping: ';
+var_dump($_SESSION['selected']);
+$game = new Game(new Phrase($_SESSION['phrase'], $_SESSION['selected']));
+$game->phrase->checkLetter();
+
 
 include_once 'inc/header.inc.php';
 

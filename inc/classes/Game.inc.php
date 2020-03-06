@@ -3,10 +3,15 @@
 	private $phrase;
 	private $lives;
 
-	public function __construct(string $phrase)
+	public function __construct(Phrase $phrase)
 	{
-		$this->phrase = new Phrase($phrase, $_SESSION['selected']);
+		$this->phrase = $phrase;
 		$this->lives = 5;
+	}
+	public function __destruct()
+	{
+		$_SESSION['phrase'] = $this->phrase->currentPhrase;
+		$_SESSION['selected'] = $this->phrase->selected;
 	}
 	public function __get($name)
 	{
@@ -37,11 +42,11 @@
 
 	public function gameOver()
 	{
-		if ($this->checkForLose())
-			return 'The phrase was: "' . $this->phrase->currentPhrase . '". Better luck next time!';
-		if ($this->checkForWin())
-			return 'Congratulations on guessing: "' . $this->phrase->currentPhrase . '"';
-		return false;
+		// if ($this->checkForLose())
+		// 	return 'The phrase was: "' . $this->phrase->currentPhrase . '". Better luck next time!';
+		// if ($this->checkForWin())
+		// 	return 'Congratulations on guessing: "' . $this->phrase->currentPhrase . '"';
+		// return false;
 	}
 	public function displayKeyboard()
 	{
