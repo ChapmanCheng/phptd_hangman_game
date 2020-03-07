@@ -3,11 +3,6 @@ session_start();
 require 'inc/autoloader.inc.php';
 // session_destroy();
 
-<<<<<<< HEAD
-// var_dump($_SESSION);
-$session = new Session();
-$game = new Game(new Phrase($session->quote, $_SESSION['selected']));
-=======
 if ($_POST) {
     $key = filter_input(INPUT_POST, 'key', FILTER_SANITIZE_STRING);
     if (!isset($_SESSION['selected']))
@@ -15,7 +10,6 @@ if ($_POST) {
     if (!in_array($key, $_SESSION['selected']))
         $_SESSION['selected'][] = $key;
 }
->>>>>>> meeting_requirements
 
 if (isset($_SESSION['phrase']))
 

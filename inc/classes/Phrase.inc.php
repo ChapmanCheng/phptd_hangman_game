@@ -5,11 +5,7 @@ class Phrase
 	private $currentPhrase;
 	private $selected;
 
-<<<<<<< HEAD
-	public function __construct(string $phrase, array $selected)
-=======
 	public function __construct(string $phrase = null, array $selected = array())
->>>>>>> meeting_requirements
 	{
 		$this->currentPhrase = $phrase;
 		$this->selected = $selected;
