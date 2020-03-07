@@ -8,6 +8,12 @@
 		$this->phrase = $phrase;
 		$this->lives = 5;
 	}
+	public function __destruct()
+	{
+		// !Deprecate need to store info somewhere else
+		// $_SESSION['phrase'] = $this->phrase->currentPhrase;
+		// $_SESSION['selected'] = $this->phrase->selected;
+	}
 	public function __get($name)
 	{
 		if (isset($this->$name))
@@ -45,16 +51,22 @@
 	}
 	public function displayKeyboard()
 	{
+		$selectedString = implode('', $this->phrase->selected);
+
 		$html = '';
 		$keyboardRows = array('qwertyuiop', 'asdfghjkl', 'zxcvbnm');
 		foreach ($keyboardRows as $row) {
 			$html .= '<div class="keyrow">';
-			foreach (str_split($row) as $key) {
-				if (in_array($key, $this->phrase->selected))
-					$html .= '<input class="key" style="background-color:red;" type="submit" name="key" value="' . $key . '" disabled>';
+			foreach (str_split($row) as $key)
+
+				if (is_int(strpos($selectedString, $key)))
+					if ($this->phrase->checkLetter($key))
+						$html .= '<input class="key" style="background-color:green;color:white;" type="submit" name="key" value="' . $key . '" disabled>';
+					else
+						$html .= '<input class="key" style="background-color:red;color:white;" type="submit" name="key" value="' . $key . '" disabled>';
 				else
 					$html .= '<input class="key" type="submit" name="key" value="' . $key . '">';
-			}
+
 			$html .= '</div>';
 		}
 		return $html;

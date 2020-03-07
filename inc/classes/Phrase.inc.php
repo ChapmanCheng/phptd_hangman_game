@@ -1,20 +1,35 @@
 <?php
+
 class Phrase
 {
 	private $currentPhrase;
-	private $selected = array();
+	private $selected;
 
+<<<<<<< HEAD
 	public function __construct(string $phrase, array $selected)
+=======
+	public function __construct(string $phrase = null, array $selected = array())
+>>>>>>> meeting_requirements
 	{
 		$this->currentPhrase = $phrase;
 		$this->selected = $selected;
+
+		if (!$phrase) {
+			// $this->currentPhrase  = $this->fetchRandomQuote();
+			include 'inc/phrases.inc.php';
+			$this->currentPhrase  = $phrases[array_rand($phrases)];
+		}
+
+		$_SESSION['phrase'] = $this->currentPhrase;
 	}
-	public function __get($name)
+
+	public function __get(string $name)
 	{
 		if (isset($this->$name))
 			return $this->$name;
 	}
-	public function __set($name, $value)
+
+	public function __set(string $name, $value)
 	{
 		if (isset($this->name))
 			$this->$name = $value;
@@ -32,7 +47,7 @@ class Phrase
 			if (trim($letter)) {
 				// letter and punctuation
 				$className = array($letter);
-				$className[] = in_array(strtolower($letter), $this->selected) ? "" : 'hide';
+				$className[] = in_array(strtolower($letter), $this->selected) ? "show" : 'hide';
 				$className[] = ctype_punct($letter) ? 'punt' : 'letter';
 				$className = implode(' ', $className);
 
@@ -82,6 +97,7 @@ class Phrase
 		// ? this takes alot of lines of codes, 
 		// ? javascript could have done it in a few lines
 		$phrase = str_replace(' ', '', $this->currentPhrase);
+		$phrase = strtolower($phrase);
 		$arr = str_split($phrase);
 		$arr = array_unique($arr, SORT_STRING);
 		$arr = array_map(function ($val) {
@@ -92,5 +108,14 @@ class Phrase
 				return $val;
 		});
 		return $arr;
+	}
+
+	private function fetchRandomQuote()
+	{
+		// credits: lukePeavey
+		// source: https://github.com/lukePeavey/quotable#get-random-quote
+		$data = file_get_contents('https://api.quotable.io/random?maxLength=25');
+		$data = json_decode($data);
+		return $data->content;
 	}
 }
