@@ -1,30 +1,39 @@
 <?php
 session_start();
 require 'inc/autoloader.inc.php';
-// Session::unsetAll();
+// session_destroy();
 
-if (!$_SESSION) {
-    $_SESSION['phrase'] = '';
-    $_SESSION['selected'] = array();
+if ($_POST) {
+    $key = filter_input(INPUT_POST, 'key', FILTER_SANITIZE_STRING);
+    if (!isset($_SESSION['selected']))
+        $_SESSION['selected'] = array();
+    if (!in_array($key, $_SESSION['selected']))
+        $_SESSION['selected'][] = $key;
 }
 
-var_dump($_SESSION);
+if (isset($_SESSION['phrase']))
 
-// echo 'dumping: ';
-// var_dump($_SESSION['selected']);
-$game = new Game(new Phrase($_SESSION['phrase'], $_SESSION['selected']));
+    $phrase =  new Phrase($_SESSION['phrase'], $_SESSION['selected']);
+else
+    $phrase = new Phrase();
 
+$game = new Game($phrase);
 
-
+// // !debug
+// echo '$_POST : ' . '<br/>';
+// var_dump($_POST);
+// echo '$_SESSION : ' . '<br/>';
+// var_dump($_SESSION);
+// // !debug
 include_once 'inc/header.inc.php';
 
 // * --- BODY ---
-// if ($msg = $game->gameOver())
-// include_once 'views/game_over.php'; // go to game over screen    
-// else
-include_once 'views/game.php'; // play game as usual
 
-echo '<p>Quotes powered by <a href="https://github.com/lukePeavey/quotable#get-random-quote">Quotable</a></p>';
+if ($msg = $game->gameOver())
+    include_once 'views/game_over.php'; // go to game over screen    
+else
+    include_once 'views/game.php'; // play game as usual
+
 // * --- BODY ---
 
 include_once 'inc/footer.inc.php';

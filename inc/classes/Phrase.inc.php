@@ -1,8 +1,9 @@
 <?php
+
 class Phrase
 {
 	private $currentPhrase;
-	private $selected = array();
+	private $selected;
 
 	public function __construct(string $phrase = null, array $selected = array())
 	{
@@ -10,8 +11,12 @@ class Phrase
 		$this->selected = $selected;
 
 		if (!$phrase) {
-			$this->currentPhrase  = $this->fetchRandomQuote();
+			// $this->currentPhrase  = $this->fetchRandomQuote();
+			include 'inc/phrases.inc.php';
+			$this->currentPhrase  = $phrases[array_rand($phrases)];
 		}
+
+		$_SESSION['phrase'] = $this->currentPhrase;
 	}
 
 	public function __get(string $name)
@@ -32,14 +37,13 @@ class Phrase
 	 */
 	public function addPhraseToDisplay()
 	{
-
 		$html =  '';
 		foreach (str_split($this->currentPhrase) as $letter)
 			// $letter = H, e, l, l, o, , W, o, r, l, d
 			if (trim($letter)) {
 				// letter and punctuation
 				$className = array($letter);
-				$className[] = in_array(strtolower($letter), $this->selected) ? "" : 'hide';
+				$className[] = in_array(strtolower($letter), $this->selected) ? "show" : 'hide';
 				$className[] = ctype_punct($letter) ? 'punt' : 'letter';
 				$className = implode(' ', $className);
 
@@ -56,16 +60,11 @@ class Phrase
 	 * @param {string} a single English letter
 	 * @return boolean
 	 */
-	public function checkLetter($letter)
+	public function checkLetter(string $letter)
 	{
-		$letter = filter_input(INPUT_POST, 'key', FILTER_SANITIZE_STRING);
-		if (!in_array($letter, $this->selected)) {
-			$this->selected[] = $letter;
-			sort($this->selected, SORT_STRING);
-		}
 		return stripos($this->currentPhrase, $letter) !== false ?  1 : 0;
 	}
-	public function checkLetters()
+	public function getResults()
 	{
 		$result = array(
 			'correct' => array(),
@@ -91,6 +90,7 @@ class Phrase
 		// ? this takes alot of lines of codes, 
 		// ? javascript could have done it in a few lines
 		$phrase = str_replace(' ', '', $this->currentPhrase);
+		$phrase = strtolower($phrase);
 		$arr = str_split($phrase);
 		$arr = array_unique($arr, SORT_STRING);
 		$arr = array_map(function ($val) {

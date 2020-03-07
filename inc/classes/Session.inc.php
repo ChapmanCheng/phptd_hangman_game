@@ -16,9 +16,6 @@ class Session
                 sort($_SESSION['selected'], SORT_STRING);
             }
         }
-
-        // ! DEBUG
-        // print_r($_SESSION);
     }
     public function __get($name)
     {
